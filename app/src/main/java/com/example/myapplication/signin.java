@@ -48,39 +48,53 @@ public class signin extends AppCompatActivity {
                 loginUser();
             }
         });
-
-
     }
-    private void loginUser(){
-        String email =memail.getText().toString();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (mauth.getCurrentUser() != null) {
+            startActivity(new Intent(signin.this, MainActivity.class));
+            finish();
+        }
+    }
+
+    private void loginUser() {
+        String email = memail.getText().toString().trim();
         String pass = mpass.getText().toString();
-        if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            if (!pass.isEmpty()){
-                mauth.signInWithEmailAndPassword(email,pass)
-                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                Toast.makeText(signin.this, "LogIn Successful", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(signin.this, MainActivity.class));
-                                finish();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(signin.this, "Login Failed", Toast.LENGTH_SHORT).show();
 
-                    }
-                });
-
-            }else{
-                mpass.setError("Empty Fields Are Not Allowed!!");
-            }
-        }else if(email.isEmpty()){
+        if (email.isEmpty()) {
             memail.setError("Empty Fields Are Not Allowed!!");
-        }else{
-            memail.setError("Please Enter Correct Email");
+            return;
         }
 
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            memail.setError("Please Enter Correct Email");
+            return;
+        }
 
+        if (pass.isEmpty()) {
+            mpass.setError("Empty Fields Are Not Allowed!!");
+            return;
+        }
+
+        signinbtn.setEnabled(false);
+        mauth.signInWithEmailAndPassword(email, pass)
+                .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        signinbtn.setEnabled(true);
+                        Toast.makeText(signin.this, "LogIn Successful", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(signin.this, MainActivity.class));
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                signinbtn.setEnabled(true);
+                String errorMsg = e.getMessage() != null ? e.getMessage() : "Login Failed";
+                Toast.makeText(signin.this, errorMsg, Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

@@ -4,80 +4,189 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PlayerSetup"
-    android:background="#999b84">
+    android:background="@color/bg_dark"
+    android:padding="24dp"
+    tools:context=".PlayerSetup">
 
+    <!-- Header -->
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
         android:text="@string/playersetuptitle"
-        android:textColor="#534F4F"
-        android:textSize="36sp"
+        android:textColor="@color/text_primary"
+        android:textSize="32sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/setupSub"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/setupSub"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/label1"
-        android:textColor="#CF0000"
-        app:layout_constraintBottom_toTopOf="@+id/player1name"
-        app:layout_constraintStart_toStartOf="@+id/player1name" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/label2"
-        android:textColor="#167E16"
-        app:layout_constraintBottom_toTopOf="@+id/player2name"
-        app:layout_constraintStart_toStartOf="@+id/player2name" />
-
-    <EditText
-        android:id="@+id/player1name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:ems="10"
-        android:hint="@string/namehint"
-        android:inputType="textPersonName"
-        android:textColor="#4E4C4C"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="32dp"
+        android:text="Choose your battle names"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/player1Card"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <EditText
-        android:id="@+id/player2name"
-        android:layout_width="wrap_content"
+    <!-- Player 1 Card -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/player1Card"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
-        android:ems="10"
-        android:hint="@string/namehint"
-        android:inputType="textPersonName"
-        android:textColor="#4E4C4C"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/card_glass_bg"
+        android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/player2Card"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/player1name" />
+        app:layout_constraintTop_toBottomOf="@+id/setupSub">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="150dp"
+        <TextView
+            android:id="@+id/p1Badge"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/card_glass_bg"
+            android:gravity="center"
+            android:text="X"
+            android:textColor="@color/player_x"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Player 1"
+            android:textColor="@color/player_x"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/p1Badge"
+            app:layout_constraintStart_toEndOf="@+id/p1Badge"
+            app:layout_constraintTop_toTopOf="@+id/p1Badge" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/p1InputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Enter Name"
+            android:textColorHint="@color/text_secondary"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxStrokeColor="@color/player_x"
+            app:boxStrokeWidth="1.5dp"
+            app:layout_constraintTop_toBottomOf="@+id/p1Badge"
+            app:startIconDrawable="@drawable/ic_person"
+            app:startIconTint="@color/player_x">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/player1name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Player 1"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Player 2 Card -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/player2Card"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/redbutton"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/card_glass_bg"
+        android:padding="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/player1Card">
+
+        <TextView
+            android:id="@+id/p2Badge"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/card_glass_bg"
+            android:gravity="center"
+            android:text="O"
+            android:textColor="@color/player_o"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="Player 2"
+            android:textColor="@color/player_o"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/p2Badge"
+            app:layout_constraintStart_toEndOf="@+id/p2Badge"
+            app:layout_constraintTop_toTopOf="@+id/p2Badge" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/p2InputLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Enter Name"
+            android:textColorHint="@color/text_secondary"
+            app:boxCornerRadiusBottomEnd="16dp"
+            app:boxCornerRadiusBottomStart="16dp"
+            app:boxCornerRadiusTopEnd="16dp"
+            app:boxCornerRadiusTopStart="16dp"
+            app:boxStrokeColor="@color/player_o"
+            app:boxStrokeWidth="1.5dp"
+            app:layout_constraintTop_toBottomOf="@+id/p2Badge"
+            app:startIconDrawable="@drawable/ic_person"
+            app:startIconTint="@color/player_o">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/player2name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Player 2"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Start Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@drawable/btn_gradient_primary"
+        android:elevation="6dp"
         android:onClick="submitbuttonclick"
-        android:text="@string/submitbutton"
+        android:text="Start Match"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/player2name"
-        app:layout_constraintVertical_bias="0.13" />
+        app:layout_constraintTop_toBottomOf="@+id/player2Card" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

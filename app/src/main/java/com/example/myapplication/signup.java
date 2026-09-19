@@ -51,35 +51,45 @@ public class signup extends AppCompatActivity {
             }
         });
     }
-    private void createUser(){
-        String email =memail.getText().toString();
+    private void createUser() {
+        String email = memail.getText().toString().trim();
         String pass = mpass.getText().toString();
-        if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            if (!pass.isEmpty()){
-                mauth.createUserWithEmailAndPassword(email,pass)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>(){
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(signup.this,"Registered Successfully",Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(signup.this, signin.class));
-                                finish();
-                            }}).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(signup.this,"Registration Error",Toast.LENGTH_SHORT).show();
-                    }
-                });
 
-
-            }else{
-                mpass.setError("Empty Fields Are Not Allowed!!");
-            }
-        }else if(email.isEmpty()){
+        if (email.isEmpty()) {
             memail.setError("Empty Fields Are Not Allowed!!");
-        }else{
-            memail.setError("Please Enter Correct Email");
+            return;
         }
 
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            memail.setError("Please Enter Correct Email");
+            return;
+        }
 
+        if (pass.isEmpty()) {
+            mpass.setError("Empty Fields Are Not Allowed!!");
+            return;
+        }
+
+        if (pass.length() < 6) {
+            mpass.setError("Password must be at least 6 characters");
+            return;
+        }
+
+        signupbtn.setEnabled(false);
+        mauth.createUserWithEmailAndPassword(email, pass)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        signupbtn.setEnabled(true);
+                        if (task.isSuccessful()) {
+                            Toast.makeText(signup.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(signup.this, signin.class));
+                            finish();
+                        } else {
+                            String errorMsg = task.getException() != null ? task.getException().getMessage() : "Registration Error";
+                            Toast.makeText(signup.this, errorMsg, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
     }
 }

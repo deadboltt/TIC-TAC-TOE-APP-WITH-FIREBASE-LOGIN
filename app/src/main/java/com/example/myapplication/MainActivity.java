@@ -17,4 +17,12 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PlayerSetup.class);
         startActivity(intent);
     }
+
+    public void logoutbuttonclick(View view) {
+        com.google.firebase.auth.FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(this, signin.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
 }

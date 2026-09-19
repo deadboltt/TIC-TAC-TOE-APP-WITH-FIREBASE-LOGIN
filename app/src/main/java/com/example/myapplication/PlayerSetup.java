@@ -8,9 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 
 public class PlayerSetup extends AppCompatActivity {
-     EditText player1;
-     EditText player2;
-
+    private EditText player1;
+    private EditText player2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,15 +18,21 @@ public class PlayerSetup extends AppCompatActivity {
 
         player1 = findViewById(R.id.player1name);
         player2 = findViewById(R.id.player2name);
-
     }
-    public void submitbuttonclick(View view){
-        //taking name input from users
-        String player1name = player1.getText().toString();
-        String player2name = player2.getText().toString();
-        //bundeling the name and sending it to the next activity
+
+    public void submitbuttonclick(View view) {
+        String player1name = player1.getText().toString().trim();
+        String player2name = player2.getText().toString().trim();
+
+        if (player1name.isEmpty()) {
+            player1name = "Player 1";
+        }
+        if (player2name.isEmpty()) {
+            player2name = "Player 2";
+        }
+
         Intent intent = new Intent(this, GameDisplay.class);
-        intent.putExtra("PLAYER_NAMES",new String[]{player1name,player2name});
+        intent.putExtra("PLAYER_NAMES", new String[]{player1name, player2name});
         startActivity(intent);
     }
 }
